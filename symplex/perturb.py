@@ -3,7 +3,7 @@ from symplex.utils import *
 
 
 def pertubation_vector(perm: Iterable[int], eps):
-    """
+    r"""
     Provided a sufficiently small epsilon returns a pertubation vector
     s.t. (A, b+e(\epsilon)) is in general position
     :param: permutation of m constraints, usually `range(m)`
