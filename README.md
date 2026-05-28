@@ -20,6 +20,7 @@ However, it's not required for this tutorial.
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
+   pip install -r requirements-dev.txt
    ```
 4. You're ready to go. Run commands with `python3 main.py ...` while the venv is active.
 
@@ -59,7 +60,7 @@ Push this file. An entry should appear in the **Actions** tab (doing nothing yet
 
 **What & why:** A linter reads your code without running it and flags style violations and common mistakes. Running it in CI means bad style never silently enters the main branch.
 
-**Tool:** [ruff](https://docs.astral.sh/ruff/) — a modern Python linter and formatter that is significantly faster than flake8 and covers the same rules. Install it with `pip install ruff` and run it with `ruff check .`.
+**Tool:** [ruff](https://docs.astral.sh/ruff/) — a modern Python linter and formatter that is significantly faster than flake8 and covers the same rules. It is listed in `requirements-dev.txt`; run it with `ruff check .`.
 
 **Your task:** Add a job named `lint` that:
 1. checks out the code
@@ -78,7 +79,7 @@ Push and verify the job is green.
 
 **Tool:** [pytest](https://docs.pytest.org/) — already configured in `pytest.ini`.
 
-**Your task:** Add a job named `test` that installs dependencies from `requirements.txt` and runs `pytest tests/ -v`. It should only start after `lint` has passed — use the `needs:` key.
+**Your task:** Add a job named `test` that installs dependencies from `requirements.txt` and `requirements-dev.txt` and runs `pytest tests/ -v`. It should only start after `lint` has passed — use the `needs:` key.
 
 > One CLI command in this project depends on **Graphviz**, a system-level binary not installable via pip. Without it, three tests are silently skipped. To run those too, install Graphviz with `apt-get` before the pip step.
 
@@ -259,7 +260,7 @@ Job:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.10'
-      - run: pip install ruff
+      - run: pip install -r requirements-dev.txt
       - run: ruff check .
 ```
 
@@ -281,7 +282,7 @@ Job:
       - name: Install system dependencies
         run: sudo apt-get install -y graphviz
       - name: Install Python dependencies
-        run: pip install -r requirements.txt pytest
+        run: pip install -r requirements.txt -r requirements-dev.txt
       - name: Run test suite
         run: pytest tests/ -v
 ```
@@ -461,7 +462,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.10'
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements-dev.txt
       - run: ruff check .
 
   test:
@@ -476,7 +477,7 @@ jobs:
       - name: Install system dependencies
         run: sudo apt-get install -y graphviz
       - name: Install Python dependencies
-        run: pip install -r requirements.txt pytest
+        run: pip install -r requirements.txt -r requirements-dev.txt
       - name: Run test suite
         run: pytest tests/ -v
 
