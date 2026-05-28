@@ -1,5 +1,5 @@
 line-length = 120
-exclude = [".venv", "tests"]
+exclude = [".venv", "venv", "tests"]
 
 [lint]
 ignore = ["F403", "F405", "E714", "E741", "E731"]

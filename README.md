@@ -67,7 +67,14 @@ Push this file. An entry should appear in the **Actions** tab (doing nothing yet
 2. sets up Python 3.10
 3. installs and runs ruff
 
-> The existing codebase uses star imports and long lines. You will need a small `ruff.toml` config file at the project root to keep the linter happy — check the ruff docs for `ignore` and `line-length`.
+> The existing codebase uses star imports and some patterns that ruff flags by default. Add the following `ruff.toml` at the project root before running the linter:
+> ```toml
+> line-length = 120
+> exclude = [".venv", "venv", "tests"]
+> 
+> [lint]
+> ignore = ["F403", "F405", "E714", "E741", "E731"]
+> ```
 
 Push and verify the job is green.
 
@@ -243,10 +250,10 @@ Add `ruff.toml` at the project root:
 
 ```toml
 line-length = 120
-exclude = [".venv", "tests"]
+exclude = [".venv", "venv", "tests"]
 
 [lint]
-ignore = ["E402", "F401", "F403", "F405"]
+ignore = ["F403", "F405", "E714", "E741", "E731"]
 ```
 
 Job:
